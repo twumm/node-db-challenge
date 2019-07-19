@@ -22,6 +22,8 @@ router.get('/:id', validateActionId, async (req, res, next) => {
   }
 })
 
+router.delete('/:id')
+
 // custom middlewares
 async function validateActionId(req, res, next) {
   const { id } = req.params;
