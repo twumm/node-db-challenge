@@ -1,4 +1,7 @@
+const helmet = require('helmet');
 const server = require('./api/server');
+
+server.use(helmet);
 
 const PORT = process.env.PORT || 5000;
 
