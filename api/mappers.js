@@ -30,8 +30,16 @@ function projectToBody(project) {
 }
 
 function actionToBody(action) {
-  return {
+  const result = {
     ...action,
     completed: intToBoolean(action.completed),
-  };
+  }
+  
+  if (action.contexts) {
+    result.actions = action.contexts.map(context => ({
+      ...context,
+    }))
+  }
+  
+  return result;
 }

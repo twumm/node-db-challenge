@@ -22,7 +22,14 @@ router.get('/:id', validateActionId, async (req, res, next) => {
   }
 })
 
-router.delete('/:id')
+router.get('/:id/context', validateActionId, async (req, res, next) => {
+  try {
+    const contexts = await actionsDb.getActionContexts(req.action.id)
+    res.status(200).json(contexts);
+  } catch (error) {
+    next(new Error('Cannot get context'));
+  }
+})
 
 // custom middlewares
 async function validateActionId(req, res, next) {
