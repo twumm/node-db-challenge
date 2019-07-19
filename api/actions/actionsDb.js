@@ -9,9 +9,13 @@ function getAction(id) {
     .where({ id });
 }
 
-function addAction(action) {
+function addAction(projectId, action) {
   return db('actions')
-    .insert(action)
+    .insert({
+      project_id: projectId,
+      description: action.description,
+      notes: action.notes
+    })
     .then(ids => getAction(ids[0]));
 }
 
