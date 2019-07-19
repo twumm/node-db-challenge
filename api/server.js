@@ -1,15 +1,17 @@
 const express = require('express');
 
 const server = express();
+const projectsRouter = require('./projects/projectsRouter');
 
 server.use(express.json());
 server.use(logger);
+server.use('/api/projects', projectsRouter);
 
 server.get('/', async (req, res, next) => {
   try {
     res.status(200).send('<h3>Welcome to Project Tracker api</h3>')
   } catch (error) {
-    next();
+    next(new Error('Server not available'));
   }
 });
 
