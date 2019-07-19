@@ -44,6 +44,34 @@ router.post('/:id/action', [validateProjectId, validationActionContent] async (r
   }
 })
 
+router.delete('/:id', validateProjectId, async (req, res, next) => {
+  try {
+    const deletedCount = await projectDb.remove(req.project.id);
+    res
+      .status(200)
+      .json({
+        count: deletedCount,
+        deletedProject: req.project
+      })
+  }
+  catch (error) {
+    next(error);
+  }
+})
+
+router.put('/:id', [validateProjectId, validationProjectContent], async (req, res, next) => {
+  const updates = { name, description } = req.body;
+  try {
+    const updatedProject = await projectDb.update(req.project.id, updates)
+    res
+      .status(200)
+      .json(updatedProject);
+  }
+  catch (error) {
+    next(error);
+  }
+})
+
 // custom middlewares
 async function validateProjectId(req, res, next) {
   const { id } = req.params;
