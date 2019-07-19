@@ -6,7 +6,8 @@ exports.up = function(knex) {
       table.text('name')
         .notNullable();
       table.text('description');
-      table.boolean('completed');
+      table.boolean('completed')
+        .defaultTo(false);
     })
     .createTable('actions', table => {
       table.increments();
@@ -14,6 +15,7 @@ exports.up = function(knex) {
         .notNullable();
       table.text('notes');
       table.boolean('completed')
+        .defaultTo(false);
       table.integer('project_id')
         .unsigned()
         .notNullable()
@@ -26,6 +28,6 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExist('actions')
-    .dropTableIfExist('projects')
+    .dropTableIfExists('actions')
+    .dropTableIfExists('projects')
 };
