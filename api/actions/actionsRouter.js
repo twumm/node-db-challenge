@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', validateActionId, async (req, res, next) => {
   const { id } = req.params;
   try {
     const action = await actionsDb.getAction(id);
@@ -25,7 +25,7 @@ router.get('/:id', async (req, res, next) => {
 // custom middlewares
 async function validateActionId(req, res, next) {
   const { id } = req.params;
-  const action = await actionsDb.get(id);
+  const action = await actionsDb.getAction(id);
   if (action) {
     req.action = action;
     next()
