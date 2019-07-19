@@ -42,7 +42,7 @@ exports.up = function (knex) {
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('context')
+        .inTable('contexts')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
     })
@@ -51,7 +51,7 @@ exports.up = function (knex) {
 exports.down = function (knex) {
   return knex.schema
     .dropTableIfExists('action_contexts')
-    .dropTableIfExists('context')
+    .dropTableIfExists('contexts')
     .dropTableIfExists('actions')
     .dropTableIfExists('projects')
 };
