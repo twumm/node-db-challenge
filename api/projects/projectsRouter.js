@@ -2,6 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const projectsDb = require('./projectsDb');
+const actionsDb = require('../actions/actionsDb');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -29,6 +30,17 @@ router.post('/', async (req, res, next) => {
     res.status(201).json(newProject);
   } catch (error) {
     next(new Error('Cannot create project'));
+  }
+})
+
+router.post('/:id/action', async (req, res, next) => {
+  const { id } = req.params;
+  const action = { description, notes } = req.body;
+  try {
+    const newAction = await actionsDb.addAction(id, action);
+    res.status(201).json(newAction);
+  } catch (error) {
+    next(new Error('Cannot create action'));
   }
 })
 
