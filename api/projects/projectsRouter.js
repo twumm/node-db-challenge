@@ -55,7 +55,7 @@ async function validateProjectId(req, res, next) {
     req.project = project;
     next();
   } else {
-    res.status(400).json({ message: "Invalid project id" });
+    next(new Error('Project id does not exist'));
   }
 }
 
