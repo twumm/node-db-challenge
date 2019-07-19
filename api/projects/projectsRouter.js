@@ -33,7 +33,7 @@ router.post('/', validationProjectContent, async (req, res, next) => {
   }
 })
 
-router.post('/:id/action', [validateProjectId, validationActionContent] async (req, res, next) => {
+router.post('/:id/action', [validateProjectId, validationActionContent], async (req, res, next) => {
   const { id } = req.params;
   const action = { description, notes } = req.body;
   try {
@@ -46,7 +46,7 @@ router.post('/:id/action', [validateProjectId, validationActionContent] async (r
 
 router.delete('/:id', validateProjectId, async (req, res, next) => {
   try {
-    const deletedCount = await projectDb.remove(req.project.id);
+    const deletedCount = await projectsDb.removeProject(req.project.id);
     res
       .status(200)
       .json({
@@ -62,7 +62,7 @@ router.delete('/:id', validateProjectId, async (req, res, next) => {
 router.put('/:id', [validateProjectId, validationProjectContent], async (req, res, next) => {
   const updates = { name, description } = req.body;
   try {
-    const updatedProject = await projectDb.update(req.project.id, updates)
+    const updatedProject = await projectsDb.updateProject(req.project.id, updates)
     res
       .status(200)
       .json(updatedProject);
@@ -78,7 +78,7 @@ async function validateProjectId(req, res, next) {
   if (isNaN(Number(id))) {
     res.status(400).json({ message: 'User id must be a number' })
   }
-  const project = await projectDb.get(id);
+  const project = await projectsDb.getProject(id);
   if (project) {
     req.project = project;
     next();
