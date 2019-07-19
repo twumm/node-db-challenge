@@ -3,11 +3,13 @@ const helmet = require('helmet');
 
 const server = express();
 const projectsRouter = require('./projects/projectsRouter');
+const actionsRouter = require('./actions/actionsRouter');
 
 server.use(express.json());
 server.use(helmet());
 server.use(logger);
 server.use('/api/projects', projectsRouter);
+server.use('/api/actions', actionsRouter);
 
 server.get('/', async (req, res, next) => {
   try {
